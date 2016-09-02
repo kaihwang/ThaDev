@@ -10,7 +10,7 @@ for s in KKI_0050815; do #$(cat /home/despoB/kaihwang/bin/ThaDev/list_of_control
 	#cd ${WD}/func_preproc/
 
 	if [ -e ${WD}/func_preproc/${s}_func_preproc.nii.gz ]; then
-		for roi in Gordon_333_3mm Morel_Mask_IJK_3mm; do
+		for roi in Gordon_333_3mm WTA_3mm; do
 			3dNetCorr \
 			-inset ${WD}/func_preproc/${s}_func_preproc.nii.gz \
 			-in_rois /home/despoB/kaihwang/Rest/ABIDE/ROIs/${roi}.nii.gz \

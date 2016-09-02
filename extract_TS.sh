@@ -19,6 +19,15 @@ for s in KKI_0050815; do #$(cat /home/despoB/kaihwang/bin/ThaDev/list_of_control
 
 			mv /tmp/KH_${s}/${s}_${roi}_TS_000.netts /home/despoB/connectome-thalamus/NotBackedUp/TS/		
 		done
+
+		3dNetCorr \
+		-inset ${WD}/func_preproc/${s}_func_preproc.nii.gz \
+		-in_rois /home/despoB/kaihwang/Rest/ABIDE/ROIs/Gordon_plus_WTA_3mm.nii.gz \
+		-prefix /tmp/KH_${s}/Adj_Gordon_plus_WTA_3mm
+
+		num=$(expr $(wc -l /tmp/KH_${s}/Adj_Gordon_plus_WTA_3mm_000.netcc | awk '{print $1}') - 6)
+		tail -n $num /tmp/KH_${s}/Adj_Gordon_plus_WTA_3mm_000.netcc > /home/despoB/connectome-thalamus/NotBackedUp/ParMatrices/${s}_Gordon_plus_WTA_3mm_corrmat  
+
 	fi
 
 	rm -rf /tmp/KH_${s}/

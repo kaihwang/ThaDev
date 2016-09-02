@@ -46,7 +46,23 @@ for mask in ['WTA_3mm']:
 
 	mean_PC = np.sum(PCs,axis=0)/13.5
 
-	fn = Output_path + subject + '_Gordon_plus_' + mask + '_meanPC'
+	fn = Output_path + subject + '_Gordon_plus_' + mask + '_pcorr_meanPC'
 	np.savetxt(fn, mean_PC)
-	fn = Output_path + subject + '_Gordon_plus_' + mask + '_PCs'
+	fn = Output_path + subject + '_Gordon_plus_' + mask + '_pcorr_PCs'
 	np.savetxt(fn, PCs)
+
+
+	#full correlation
+	adj = np.loadtxt(pcorr_path + subject + '_Gordon_plus_WTA_3mm_corrmat')
+	adj[np.isnan(adj)]=0
+
+	PCs = []
+	for c in np.arange(0.01,0.16, 0.01):
+		M = bct.threshold_proportional(adj, c, copy=True)
+		PCs += [bct.participation_coef(M, CI)]
+
+	mean_PC = np.sum(PCs,axis=0)/13.5
+	fn = Output_path + subject + '_Gordon_plus_WTA_3mm_corr_meanPC'
+	np.savetxt(fn, mean_PC)
+	fn = Output_path + subject + '_Gordon_plus_WTA_3mm_corr_PCs'
+	np.savetxt(fn, PCs)	

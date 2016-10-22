@@ -9,7 +9,7 @@ import glob
 
 
 datapath = '/home/despoB/kaihwang/Rest/Graph/'
-Atlases =['_Gordon_plus_Morel_3mm', '_Gordon_plus_Thalamus_WTA_3mm']
+Atlases =['_Gordon_plus_Morel_3mm', '_Gordon_plus_WTA_3mm']
 
 def compile_dataframe():
 	'''compile data'''
@@ -38,3 +38,9 @@ if __name__ == "__main__":
 
 	df = compile_dataframe()
 	df.to_csv('Data/pcdata.csv')
+
+	PCcorr =[]
+	for i in np.arange(1,np.max(df['ROI'])+1):
+		PC = df[(df['Atlas']=='Gordon_plus_WTA_3mm') & (df['ROI']==i)]['PC'].values
+		age = df[(df['Atlas']=='Gordon_plus_WTA_3mm') & (df['ROI']==i)]['Age'].values	
+		PCcorr += [np.corrcoef(PC[~np.isnan(age)],age[~np.isnan(age)])[0,1]]
